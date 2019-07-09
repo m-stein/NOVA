@@ -50,7 +50,8 @@ class Hip_mem
             ACPI_RSDT   = -3u,
             ACPI_XSDT   = -4u,
             MB2_FB      = -5u,
-            HYP_LOG     = -6u
+            HYP_LOG     = -6u,
+            SYSTAB      = -7u
         };
 
         uint64  addr;
@@ -130,6 +131,10 @@ class Hip
         template <typename T>
         INIT
         static void add_fb (Hip_mem *&, T const *);
+
+        template <typename T>
+        INIT
+        static void add_systab (Hip_mem *&, T const *);
 
         template <typename T>
         INIT

@@ -121,6 +121,10 @@ void Hip::build_mbi2(Hip_mem *&mem, mword addr)
     Multiboot2::Header const *mbi = static_cast<Multiboot2::Header const *>(Hpt::remap (Pd::kern.quota, addr));
 
     mbi->for_each_tag([&](Multiboot2::Tag const * tag) {
+
+        if (tag->type == Multiboot2::TAG_SYSTAB_64)
+            Hip::add_systab(mem, tag->systab_64());
+
         if (tag->type == Multiboot2::TAG_CMDLINE)
             Cmdline::init (tag->cmdline());
 
@@ -148,6 +152,16 @@ void Hip::add_fb(Hip_mem *&mem, T const *fb)
     mem->size |= fb->bpp & 0xffu;
     mem->aux   = fb->pitch;
     mem->type  = Hip_mem::MB2_FB;
+    mem++;
+}
+
+
+template <typename T>
+void Hip::add_systab(Hip_mem *&mem, T const *systab)
+{
+    mem->addr = systab->pointer;
+    mem->size = 0;
+    mem->type = Hip_mem::SYSTAB;
     mem++;
 }
 

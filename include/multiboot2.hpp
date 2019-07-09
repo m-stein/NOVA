@@ -25,17 +25,19 @@ namespace Multiboot2
     class Header;
     class Framebuffer;
     class Memory_map;
+    class Systab_64;
     class Module;
     class Tag;
 
     enum {
-        MAGIC       = 0x36d76289,
-        TAG_END     = 0,
-        TAG_CMDLINE = 1,
-        TAG_MODULE  = 3,
-        TAG_MEMORY  = 6,
-        TAG_FB      = 8,
-        TAG_ACPI_2  = 15,
+        MAGIC         = 0x36d76289,
+        TAG_END       = 0,
+        TAG_CMDLINE   = 1,
+        TAG_MODULE    = 3,
+        TAG_MEMORY    = 6,
+        TAG_FB        = 8,
+        TAG_SYSTAB_64 = 12,
+        TAG_ACPI_2    = 15,
     };
 
 };
@@ -71,6 +73,14 @@ class Multiboot2::Tag
                 return nullptr;
 
             return reinterpret_cast<Framebuffer *>(reinterpret_cast<mword>(this + 1));
+        }
+
+        inline Systab_64 const * systab_64() const
+        {
+            if (type != TAG_SYSTAB_64)
+                return nullptr;
+
+            return reinterpret_cast<Systab_64 *>(reinterpret_cast<mword>(this + 1));
         }
 
         inline Module const * module() const
@@ -109,6 +119,13 @@ class Multiboot2::Module
         uint32 s_addr;
         uint32 e_addr;
         char string [0];
+};
+
+class Multiboot2::Systab_64
+{
+    public:
+
+        uint64 pointer;
 };
 
 class Multiboot2::Framebuffer
