@@ -50,6 +50,10 @@ class Msr
             IA32_THERM_STATUS       = 0x19c,
             IA32_MISC_ENABLE        = 0x1a0,
             IA32_DEBUG_CTL          = 0x1d9,
+
+            IA32_POWER_CTL          = 0x1fc,
+            IA32_ENERGY_PERF_BIAS   = 0x1b0,
+
             IA32_MTRR_PHYS_BASE     = 0x200,
             IA32_MTRR_PHYS_MASK     = 0x201,
             IA32_MTRR_FIX64K_BASE   = 0x250,
@@ -82,6 +86,11 @@ class Msr
 
             IA32_DS_AREA            = 0x600,
             IA32_TSC_DEADLINE       = 0x6e0,
+
+            MSR_PM_ENABLE           = 0x770,
+            MSR_HWP_INTERRUPT       = 0x773,
+            MSR_HWP_REQUEST         = 0x774,
+
             IA32_EXT_XAPIC          = 0x800,
             IA32_EFER               = 0xc0000080,
             IA32_STAR               = 0xc0000081,
